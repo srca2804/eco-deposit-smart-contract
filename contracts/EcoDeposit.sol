@@ -33,14 +33,15 @@ contract EcoDeposit {
     }
 
     // 2. RETORNO: El cliente devuelve la botella y el contrato le reembolsa automáticamente
-    // Puede ser llamado por el cliente o por una máquina de reciclaje automática (RVM)
+    // Implementa el método moderno .call para evitar obsolescencia por cambios de GAS en la red
     function returnBottle(uint256 _bottleId) external {
         require(bottles[_bottleId].isActive, "Esta botella no esta registrada o ya fue devuelta");
         
         address customerAddress = bottles[_bottleId].customer;
         bottles[_bottleId].isActive = false; // Desactivamos el registro inmediatamente para evitar doble reclamo
 
-        // Se le devuelve el depósito de forma segura y atómica al usuario
-        payable(customerAddress).transfer(depositAmount);
+        // Transferencia segura utilizando las mejores prácticas de la EVM actual
+        (bool success, ) = payable(customerAddress).call{value: depositAmount}("");
+        require(success, "La transferencia fallo");
     }
 }
