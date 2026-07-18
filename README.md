@@ -1,4 +1,3 @@
-# eco-deposit-smart-contract
 # Eco-Deposit: Decentralized Deposit-Refund Smart Contract
 
 This repository contains the core smart contract implementation for **Eco-Deposit**, a decentralized Deposit-Refund System (DRS) designed to internalize single-use plastic consumption externalities using the Ethereum Virtual Machine (EVM) architecture.
